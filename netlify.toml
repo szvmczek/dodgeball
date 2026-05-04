@@ -1,0 +1,13 @@
+[build]
+  publish = "client"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "no-referrer"
+
+# In Netlify UI, set this env so the client knows where the WS server lives:
+#   DODGE_SERVER = https://your-railway-app.up.railway.app
+# Then add the snippet below to client/index.html or override at runtime.

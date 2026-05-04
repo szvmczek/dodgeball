@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<title>Dodgeball Arena</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ==================== MENU ==================== -->
+  <section id="screen-menu" class="screen">
+    <div class="menu-card">
+      <h1 class="logo">DODGEBALL <span>ARENA</span></h1>
+      <p class="tagline">Wpisz ksywę, stwórz pokój albo dołącz do znajomych.</p>
+
+      <label class="field">
+        <span>Ksywa</span>
+        <input id="input-nick" maxlength="16" placeholder="np. Szymon" autocomplete="nickname" />
+      </label>
+
+      <div class="row">
+        <button id="btn-create" class="primary">Stwórz pokój</button>
+      </div>
+
+      <div class="divider"><span>lub dołącz</span></div>
+
+      <label class="field">
+        <span>Kod pokoju</span>
+        <input id="input-code" maxlength="4" placeholder="ABCD" autocomplete="off" />
+      </label>
+      <button id="btn-join" class="secondary">Dołącz</button>
+
+      <p class="server-status" id="server-status">Łączenie z serwerem…</p>
+
+      <div class="leaderboard-mini">
+        <h3>Top graczy</h3>
+        <ol id="leaderboard-list"><li class="empty">Brak danych</li></ol>
+      </div>
+
+      <p class="hint">Kontrole: <b>WASD</b> ruch · <b>mysz</b> celowanie · <b>LPM</b> (trzymaj) ładowanie / rzut · <b>LPM</b> (puknij) podniesienie / łapanie · <b>E</b> upuść piłkę</p>
+    </div>
+  </section>
+
+  <!-- ==================== LOBBY ==================== -->
+  <section id="screen-lobby" class="screen hidden">
+    <div class="lobby-grid">
+      <header class="lobby-head">
+        <div class="room-code">
+          <span class="label">Kod pokoju</span>
+          <span class="code" id="room-code">····</span>
+          <button id="btn-copy" class="ghost small">Kopiuj</button>
+        </div>
+        <button id="btn-leave" class="ghost">← Opuść</button>
+      </header>
+
+      <div class="teams">
+        <div class="team team-left">
+          <h2>Niebiescy</h2>
+          <ul id="team-left-list"></ul>
+        </div>
+        <div class="team-vs">VS</div>
+        <div class="team team-right">
+          <h2>Różowi</h2>
+          <ul id="team-right-list"></ul>
+        </div>
+      </div>
+
+      <div class="lobby-actions">
+        <button id="btn-switch" class="secondary">Zmień drużynę</button>
+        <div class="settings" id="lobby-settings">
+          <label>Piłki <select id="set-balls"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
+          <label>Do wygrania <select id="set-rounds"><option>1</option><option selected>2</option><option>3</option></select></label>
+          <label><input type="checkbox" id="set-powerups" checked /> Power-upy</label>
+        </div>
+        <button id="btn-start" class="primary" disabled>Start</button>
+      </div>
+
+      <div class="chat">
+        <div id="chat-log" class="chat-log"></div>
+        <input id="chat-input" maxlength="80" placeholder="Wciśnij Enter aby napisać…" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GAME ==================== -->
+  <section id="screen-game" class="screen hidden">
+    <div class="game-stage">
+      <canvas id="canvas" width="1280" height="720"></canvas>
+      <div class="hud">
+        <div class="hud-top">
+          <div class="score score-left"><span class="dot"></span><span id="score-left">0</span></div>
+          <div class="round-info">
+            <div class="round-state" id="round-state">Runda 1</div>
+            <div class="round-timer" id="round-timer"></div>
+          </div>
+          <div class="score score-right"><span id="score-right">0</span><span class="dot"></span></div>
+        </div>
+        <div class="hud-bot">
+          <div class="charge-meter hidden" id="charge-meter">
+            <div class="charge-fill" id="charge-fill"></div>
+            <span>SIŁA RZUTU</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="round-overlay" class="overlay hidden">
+        <div class="overlay-text" id="round-overlay-text">3</div>
+      </div>
+
+      <div id="match-end" class="overlay hidden">
+        <div class="match-end-card">
+          <h2 id="match-end-title">Wygrali Niebiescy</h2>
+          <table class="stats-table">
+            <thead><tr><th>Gracz</th><th>Trafienia</th><th>Łapania</th></tr></thead>
+            <tbody id="match-end-stats"></tbody>
+          </table>
+          <button id="btn-back-lobby" class="primary">Wróć do lobby</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
