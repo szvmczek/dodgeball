@@ -1,0 +1,12 @@
+{
+  "name": "dodgeball-arena",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server/index.js",
+    "postinstall": "cd server && npm install --omit=optional",
+    "smoke": "cd server && node smoke-test.js"
+  }
+}
